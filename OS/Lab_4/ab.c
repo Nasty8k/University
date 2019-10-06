@@ -5,7 +5,12 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <time.h>
-
+/*  in Terminal: 
+    1)ps -a (or -aux)
+    2)kill(PID, SIGUSR1)
+    3)kill all process:
+      firstly a larger number of PID(child), secondly  lower PID(parent)
+*/
 void my_handler(int nsig){ 
     while(1)
     putchar('C');
