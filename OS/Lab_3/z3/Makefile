@@ -1,24 +1,24 @@
-.PHONY: all clean
+CC = gcc
+CFLAGS = -Wall -Werror -std=c99
 
-all: myfifo rFIFO wFIFO
+.PHONY: clean run
 
-myfifo: myfifo.c
-	gcc -Wall -o myfifo myfifo.c
+default: main read_from_FIFO write_to_FIFO
 
-rFIFO: readFIFO.c
-	gcc -Wall -o rFIFO readFIFO.c
+main: main.o
+	$(CC) $(CFLAGS) main.o -o main
 
-wFIFO: writeFIFO.c
-	gcc -Wall -o wFIFO writeFIFO.c
+main.o: main.c
+	$(CC) -c main.c -o main.o
 
+write_to_FIFO.o: write_to_FIFO.c
+	$(CC) -c write_to_FIFO.c -o write_to_FIFO.o
+
+read_from_FIFO.o: read_from_FIFO.c
+	$(CC) -c read_from_FIFO.c -o read_from_FIFO.o
+		
 clean:
-	@rm -rf *.o myfifo rFIFO wFIFO FIFO
+	rm *.o read_from_FIFO write_to_FIFO main newImg.jpg
 
-create:
-	./myfifo
-
-write:
-	./wFIFO
-
-read:
-	./rFIFO
+run:
+	./main
