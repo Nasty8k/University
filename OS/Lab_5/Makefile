@@ -1,18 +1,19 @@
-CC = gcc
-CFLAGS = -rdynamic
 
 .PHONY: clean run
 
-default: dynamic
+default: libMLib.so dynamic
+
+MLib.o: MLib.c
+	gcc -fPIC -c MLib.c
+
+libMLib.so: MLib.o
+	gcc -shared MLib.o -o libMLib.so
 
 dynamic: main.c
-	$(CC) $(CFLAGS) -o dynamic main.c -ldl
-
+	gcc main.c -o dynamic -ldl
+		
 clean:
-	rm dynamic
+	rm *.o *.so dynamic
 
 run:
-	./dynamic
-
-libm:
-	./dynamic /lib64/libm.so.6	 
+	./dynamic ./libMLib.so
